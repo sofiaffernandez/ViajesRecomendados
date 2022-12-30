@@ -1,4 +1,5 @@
 # Viajes Recomendados
+
 <br>
 DESCRIPCIÓN
 <br>
@@ -15,6 +16,6 @@ USUARIOS REGISTRADOS:<br>
 ● Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)<br>
 ● Votar recomendaciones de otros usuarios<br>
 ● Opcional:<br>
-  ○ Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)<br>
-  ○ Borrar sus recomendaciones<br>
-  ○ Publicar comentarios en las recomendaciones<br>
+○ Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)<br>
+○ Borrar sus recomendaciones<br>
+○ Publicar comentarios en las recomendaciones<br>
