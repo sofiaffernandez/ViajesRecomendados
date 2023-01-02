@@ -1,6 +1,7 @@
-const { getConnection } = require("db");
+const { getConnection } = require("../../db");
+const { generateError } = require("../../helpers");
 
-const voteEntrySchema = Joi.object().keys({
+const votoSchema = Joi.object().keys({
   vote: Joi.number()
     .min(1)
     .max(5)
@@ -19,7 +20,7 @@ async function voteEntry(req, res, next) {
     try {
       connection = await getConnection();
   
-      await voteEntrySchema.validateAsync(req.body);
+      await votoSchema.validateAsync(req.body);
   
       const { id } = req.params;
       const { vote } = req.body;
@@ -27,8 +28,8 @@ async function voteEntry(req, res, next) {
       // Comprobar que la entrada existe y si no dar un 404
       const [entry] = await connection.query(
         `
-        SELECT id, place
-        FROM diary
+        SELECT id 
+        FROM recomendaciones
         WHERE id=?
       `,
         [id]
@@ -38,8 +39,8 @@ async function voteEntry(req, res, next) {
       const [existingVote] = await connection.query(
         `
         SELECT id
-        FROM diary_votes
-        WHERE entry_id=? AND user_id=?
+        FROM votos
+        WHERE recomendacion_id=? AND usuario_id=?
       `,
         [id, req.auth.id]
       );
@@ -54,15 +55,15 @@ async function voteEntry(req, res, next) {
       // Guardar el voto en la base de datos
       await connection.query(
         `
-        INSERT INTO diary_votes(entry_id, vote, date, user_id, lastUpdate)
-        VALUES(?, ?, UTC_TIMESTAMP, ?, UTC_TIMESTAMP)
+        INSERT INTO votos(recomendacion_id, voto, usuario_id, voted_at)
+        VALUES(?, ?, ?, UTC_TIMESTAMP)
       `,
-        [id, vote, req.auth.id]
+        [id, voto, req.auth.id]
       );
   
       res.send({
         status: "ok",
-        message: `Se guardó el voto (${vote} puntos) a la entrada ${id}`,
+        message: `Se guardó el voto (${voto} puntos) a la recomendación ${id}`,
       });
     } catch (error) {
       next(error);

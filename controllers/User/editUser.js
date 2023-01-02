@@ -1,4 +1,8 @@
 //Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
+const { getConnection } = require("../../db");
+const { generateError } = require("../../helpers");
+
+
 async function editUser(req, res, next) {
     let connection;
   
@@ -19,8 +23,8 @@ async function editUser(req, res, next) {
       // Comprobar que el usuario existe
       const [currentUser] = await connection.query(
         `
-        SELECT id, email, image
-        FROM users
+        SELECT id, nombre, email
+        FROM usuarios
         WHERE id=?
       `,
         [id]
@@ -53,7 +57,7 @@ async function editUser(req, res, next) {
         const [existingEmail] = await connection.query(
           `
           SELECT id
-          FROM users
+          FROM usuario
           WHERE email=? 
         `,
           [email]
@@ -85,10 +89,10 @@ async function editUser(req, res, next) {
         await connection.query(
           `
           UPDATE users 
-          SET name=?, email=?, lastUpdate=UTC_TIMESTAMP, lastAuthUpdate=UTC_TIMESTAMP, active=false, registrationCode=?, image=?
+          SET nombre=?, email=?, lastUpdate=UTC_TIMESTAMP, lastAuthUpdate=UTC_TIMESTAMP, active=false, registrationCode=?, image=?
           WHERE id=?
         `,
-          [name, email, registrationCode, savedFileName, id]
+          [nombre, email, registrationCode, savedFileName, id]
         );
   
         // Dar una respuesta
@@ -100,11 +104,11 @@ async function editUser(req, res, next) {
         // Actualizar usuario en la base de datos
         await connection.query(
           `
-        UPDATE users 
-        SET name=?, email=?, image=?, lastUpdate=UTC_TIMESTAMP
+        UPDATE usuario 
+        SET nombre=?, email=?, avatar=?, lastUpdate=UTC_TIMESTAMP
         WHERE id=?
       `,
-          [name, email, savedFileName, id]
+          [nombre, email, savedFileName, id]
         );
   
         // Dar una respuesta
@@ -119,4 +123,4 @@ async function editUser(req, res, next) {
       if (connection) connection.release();
     }
   }
-  
+  module.exports = editUser;

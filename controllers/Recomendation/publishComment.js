@@ -1,5 +1,5 @@
 //Publicar comentarios 
-const { getConnection } = require("db");
+const { getConnection } = require("../../db");
 
 const publishComments = async () => {
     let connection;
@@ -8,10 +8,8 @@ const publishComments = async () => {
       connection = await getConnection();
   
       const [result] = await connection.query(
-        `
-        INSERT INTO recomendacionComentarios (comentarios)
-        VALUE(?)
-      `,
+        `INSERT INTO comentarios (comentario)
+        VALUE(?) `,
         [comentario]
       );
 

@@ -1,5 +1,5 @@
-const { getConnection } = require("db");
-const { generateError } = require("server");
+const { getConnection } = require("../../db");
+const { generateError } = require("../../helpers");
 
 async function entryExists(req, res, next) {
   let connection;
@@ -11,7 +11,7 @@ async function entryExists(req, res, next) {
     const [current] = await connection.query(
       `
     SELECT id
-    FROM diary
+    FROM recomendacion
     WHERE id=?
   `,
       [id]
@@ -19,7 +19,7 @@ async function entryExists(req, res, next) {
 
     if (current.length === 0) {
       throw generateError(
-        `La entrada con id ${id} no existe en la base de datos`,
+        `La recomendación con id ${id} no existe en la base de datos`,
         404
       );
     } else {

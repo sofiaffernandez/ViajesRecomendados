@@ -1,5 +1,5 @@
-const { getConnection } = require("db");
-
+const { getConnection } = require("../../db");
+const { generateError } = require("../../helpers");
 
 const deteleRecomendation = async (id) => {
     let connection;
@@ -7,9 +7,7 @@ const deteleRecomendation = async (id) => {
       connection = await getConnection();
   
       await connection.query(
-        `
-        DELETE FROM recomendacion WHERE id = ?
-      `,
+        `DELETE FROM recomendacion WHERE id = ?`,
         [id]
       );
   
@@ -22,4 +20,4 @@ const deteleRecomendation = async (id) => {
       if (connection) connection.release();
     }
   };
-  module.exports= deteleRecomendation
+  module.exports = deteleRecomendation
