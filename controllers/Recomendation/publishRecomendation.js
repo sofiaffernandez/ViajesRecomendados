@@ -1,8 +1,10 @@
 //Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
 const { getConnection } = require("../../db");
+const { generateError } = require ("../../helpers")
 const path = require('path');
 const sharp = require('sharp');
 const { nanoid } = require('nanoid');
+const Joi = require ('joi');
 
 const newRecomendationSchema = Joi.object().keys({
   titulo: Joi.string()

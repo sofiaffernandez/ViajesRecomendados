@@ -1,6 +1,6 @@
 const { getConnection } = require("../../db");
 const { generateError } = require("../../helpers");
-
+const Joi = require ('joi');
 const votoSchema = Joi.object().keys({
   vote: Joi.number()
     .min(1)

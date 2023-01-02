@@ -1,6 +1,7 @@
-require("dotoenv").config();
-const express =requiere ("express");
+require("./node_modules/dotenv").config();
+const express =require("express");
 const app =express();
+
 
 //Importar controllers recomendation
 const deteleRecomendation = require ("./controllers/Recomendation/deteleRecomendations")
@@ -53,7 +54,8 @@ app.use ((req, res) => {
     });
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
+console.log(process.env.PORT)
 
 app.listen(port, () => {
   console.log(`API funcionando en http://localhost:${port} `);
