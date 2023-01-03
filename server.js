@@ -1,17 +1,34 @@
-require("./node_modules/dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "./.env") });
 const express =require("express");
 const app =express();
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const fileUpload = require("express-fileupload");
+
+app.use(express.json());
+// Procesado de body tipo json
+app.use(bodyParser.json());
+
+// Procesado de body tipo form-data
+app.use(fileUpload());
 
 
 //Importar controllers recomendation
 const deteleRecomendation = require ("./controllers/Recomendation/deteleRecomendations")
-const publishRecomendation = require ("./controllers/Recomendation/publishRecomendation")
+const deleteRecomendacionControlador = require ("./controllers/Recomendation/deleteControlador")
+const publicaRecomendacion = require ("./controllers/Recomendation/publicaRecomendacion")
 const publishComments = require ("./controllers/Recomendation/publishComment")
 const vote = require ("./controllers/Recomendation/vote")
-const entryExist = require ("./controllers/Recomendation/entryExist")
-//Importar controllers User
-const editUser = require ("./controllers/User/editUser")
 
+//Importar controllers User
+const editUser = require ("./controllers/User/editUser");
+
+
+app.get('/', (req, res) => {
+    res.send('Prueba de que funciona el Postman')
+  })
+  
 // ENDPOINTS DE CONTENIDO 
 
 //ANÓNIMO (no hace falta verifcar el usuario):
@@ -23,20 +40,20 @@ const editUser = require ("./controllers/User/editUser")
 
 //USUARIOS REGISTRADOS (hay que verificar el usuario antes):
 // Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
-app.post("/recomendation/:id/", /* hay que verificar el usuario antes */ publishRecomendation);
+app.post("/recomendation", publicaRecomendacion);
 
 // Votar recomendaciones de otros usuarios
-app.post("/recomendation/:id/votes", /* hay que verificar el usuario antes */ entryExist, vote);
+app.post("/recomendation/:id/votes", /* hay que verificar el usuario antes */  vote);
 
 
 // Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
 app.put("/users/:id",/* hay que verificar el usuario antes */ editUser);
 
 // Borrar sus recomendaciones
-app.delete("/recomendation/:id", /* hay que verificar el usuario antes */ entryExist, deteleRecomendation);
+app.delete("/recomendation/:id", /* hay que verificar el usuario antes */  deleteRecomendacionControlador);
 
 // Publicar comentarios en las recomendaciones
-app.post("/recomendation/:id/comments", /* hay que verificar el usuario antes */ entryExist, publishComments);
+app.post("/recomendation/:id/comments", /* hay que verificar el usuario antes */  publishComments);
 
 //Middleware 
 app.use ((error, req, res, next) =>{
@@ -49,8 +66,8 @@ app.use ((error, req, res, next) =>{
 //No existe
 app.use ((req, res) => {
     res.status(404).send({
-        status: "error",
-        message: "Not found",
+    status: "error",
+    message: "Not found",
     });
 });
 

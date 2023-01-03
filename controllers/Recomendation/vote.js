@@ -2,7 +2,9 @@ const { getConnection } = require("../../db");
 const { generateError } = require("../../helpers");
 const Joi = require ('joi');
 const votoSchema = Joi.object().keys({
-  vote: Joi.number()
+  id: Joi.number()
+  .required,
+  voto: Joi.number()
     .min(1)
     .max(5)
     .required()
@@ -14,17 +16,17 @@ const votoSchema = Joi.object().keys({
     ),
 });
 
-async function voteEntry(req, res, next) {
+async function vote(req, res, next) {
     let connection;
   
     try {
       connection = await getConnection();
   
+      
+      const { id } = req.body;
+      const { voto } = req.body;
+      
       await votoSchema.validateAsync(req.body);
-  
-      const { id } = req.params;
-      const { vote } = req.body;
-  
       // Comprobar que la entrada existe y si no dar un 404
       const [entry] = await connection.query(
         `
@@ -71,4 +73,4 @@ async function voteEntry(req, res, next) {
       if (connection) connection.release();
     }
   }
-module.exports = voteEntry;
+module.exports = vote;

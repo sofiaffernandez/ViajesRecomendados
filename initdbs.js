@@ -4,10 +4,11 @@ const { getConnection } = require('./db');
 
 async function main() {
   let connection;
-
   try {
     connection = await getConnection();
-
+  // await connection.query(` CREATE DATABASE IF NOT EXISTS ProyectoViajes`)
+    // await connection.query(`USE DATABASE ProyectoViajes`)
+    
     console.log('Borrando tablas existentes');
     await connection.query('DROP TABLE IF EXISTS usuarios');
     await connection.query('DROP TABLE IF EXISTS recomendaciones');
@@ -41,7 +42,7 @@ async function main() {
         foto VARCHAR(100),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         usuario_id INTEGER,
-	    FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
+	      FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
         )`
     );
 

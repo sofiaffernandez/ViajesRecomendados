@@ -1,23 +1,32 @@
 const { getConnection } = require("../../db");
-const { generateError } = require("../../helpers");
+//const { generateError } = require("../../helpers");
 
-const deteleRecomendation = async (id) => {
+const deleteRecomendaciones = async (id) => {
     let connection;
     try {
       connection = await getConnection();
-  
+      const { id } = req.params;
+//Borrar recomendaciones
       await connection.query(
-        `DELETE FROM recomendacion WHERE id = ?`,
+        `DELETE FROM recomendaciones WHERE id = ?`,
         [id]
       );
-  
+//Borrar votos
+      await connection.query( `
+        DELETE FROM votos
+        WHERE recomendacion_id=? `,
+        [id]
+      );
+//Borrar comentarios
+      await connection.query( `
+        DELETE FROM comentarios
+        WHERE recomendacion_id=? `,
+        [id]
+      );
       return;
     }
-    catch (error) {
-        next(error);
-      }
     finally {
       if (connection) connection.release();
     }
   };
-  module.exports = deteleRecomendation
+  module.exports = deleteRecomendaciones

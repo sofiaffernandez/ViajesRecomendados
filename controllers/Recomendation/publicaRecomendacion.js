@@ -1,19 +1,20 @@
 //Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
-const { getConnection } = require("../../db");
+
 const { generateError } = require ("../../helpers")
 const path = require('path');
 const sharp = require('sharp');
 const { nanoid } = require('nanoid');
 const Joi = require ('joi');
+const createRecomendacion = require("./createRecomendacion");
 
 const newRecomendationSchema = Joi.object().keys({
   titulo: Joi.string()
-  .min(5)
+  .min(2)
   .max(50)
   .required()
   .error(
     generateError(
-      "El campo titulo debe existir y ser mayor de cinco caracteres",
+      "El campo titulo debe existir y ser mayor de dos caracteres",
         400
     )
   ),
@@ -38,44 +39,34 @@ const newRecomendationSchema = Joi.object().keys({
     )
   ),
   entradilla:Joi.string()
-  .min(30)
+  .min(20)
   .max(255)
   .required()
   .error(
     generateError(
-      "El campo entradilla debe existir y ser mayor de treinta caracteres",
+      "El campo entradilla debe existir y ser mayor de 20 caracteres",
         400
     )
   ),
   texto: Joi.string()
-    .min(20)
+    .min(40)
     .max(5000)
     .required()
     .error(
       generateError(
-        "El campo texto debe existir y ser mayor de 20 caracteres",
+        "El campo texto debe existir y ser mayor de 40 caracteres",
         400
       )
     )
 });
 
 
-const publishRecomendation = async (título, categoría, lugar, entradilla, texto, foto = '') => {
-    let connection;
-    
+const publicaRecomendacion = async (req, res, next) => {
     try {
-      connection = await getConnection();
-      
+      const { titulo, categoria, lugar, entradilla, texto } = req.body
       await newRecomendationSchema.validateAsync(req.body)
-      const [result] = await connection.query(
-        `
-        INSERT INTO recomendacion (título, categoría, lugar, entradilla, texto, foto)
-        VALUES(?,?,?,?,?,?)
-      `,
-        [título, categoría, lugar, entradilla, texto, foto ]
-      );
-      let imageFileName;
-
+     //Gestión de la imagen
+    let imageFileName;
     if (req.files && req.files.image) {
       // Creo el path del directorio uploads
       const uploadsDir = path.join(__dirname, '../uploads');
@@ -92,16 +83,13 @@ const publishRecomendation = async (título, categoría, lugar, entradilla, text
 
       await image.toFile(path.join(uploadsDir, imageFileName));
     }
-  
-      res.send({
-        status: "ok",
-        message: `Recomendación creada correctamente`,
-  
-    })}
+    await createRecomendacion(titulo, categoria, lugar, entradilla, texto, imageFileName)
+    res.send({
+      status: "ok",
+      message: `Recomendación creada correctamente`,  
+    })
+  }
     catch (error) {
         next(error);
-      } finally {
-      if (connection) connection.release();
-    }
-  };
-module.exports = publishRecomendation
+}}
+module.exports = publicaRecomendacion

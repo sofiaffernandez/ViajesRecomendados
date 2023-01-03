@@ -1,18 +1,20 @@
 //Publicar comentarios 
 const { getConnection } = require("../../db");
+const createComment = require("./createRecomendacion");
+const getRecomendacionById = require("./getRecomendacionById");
+const { generateError } = require ("../../helpers")
 
-const publishComments = async () => {
+const publishComments = async (req, res, next) => {
     let connection;
   
     try {
       connection = await getConnection();
-  
-      const [result] = await connection.query(
-        `INSERT INTO comentarios (comentario)
-        VALUE(?) `,
-        [comentario]
-      );
-
+      const { id }= req.params
+      const { comentario } = req.body;
+      // Comprobar que la recomendación existe 
+      await getRecomendacionById(id);
+    
+      await createComment(comentario)
   
       res.send({
         status: "ok",
@@ -24,8 +26,6 @@ const publishComments = async () => {
     })}
     catch (error) {
         next(error);
-      } finally {
-      if (connection) connection.release();
-    }
+      }
   };
 module.exports = publishComments

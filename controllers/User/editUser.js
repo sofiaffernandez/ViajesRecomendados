@@ -1,6 +1,8 @@
 //Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
 const { getConnection } = require("../../db");
 const { generateError } = require("../../helpers");
+const { editUserSchema } = require("./userSchema");
+
 
 
 async function editUser(req, res, next) {
