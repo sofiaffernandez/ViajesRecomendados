@@ -1,7 +1,6 @@
+const express = require("express")
+const app = express()
 // Crear una nueva recomendación de viaje
-
-
-
 app.post('/recommendations', (req, res) => {
     const recommendation = req.body;
     recommendations.push(recommendation);

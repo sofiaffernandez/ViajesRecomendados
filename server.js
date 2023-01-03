@@ -1,6 +1,6 @@
 require("dotoenv").config();
-const express =requiere ("express");
-const app =express();
+const express = requiere ("express");
+const app = express();
 
 
 //Middleware 404 // otros
