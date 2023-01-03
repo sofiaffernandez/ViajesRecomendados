@@ -11,10 +11,10 @@ const getConnection = async () ={
             database: MYSQL_DATABASE,
             timezone: "Z",
         });
-     return await pool.getConnection();
+        return await pool.getConnection();
     }
 }
 
 module.exports = {
-  getConnection,
+    getConnection,
 };
