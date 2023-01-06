@@ -29,7 +29,7 @@ async function editUser(req, res, next) {
         FROM usuarios
         WHERE id=?
       `,
-        [id]
+        [id, nombre, email]
       );
   
       if (currentUser.length === 0) {
@@ -91,10 +91,10 @@ async function editUser(req, res, next) {
         await connection.query(
           `
           UPDATE users 
-          SET nombre=?, email=?, lastUpdate=UTC_TIMESTAMP, lastAuthUpdate=UTC_TIMESTAMP, active=false, registrationCode=?, image=?
+          SET nombre=?, email=?, avatar=?
           WHERE id=?
         `,
-          [nombre, email, registrationCode, savedFileName, id]
+          [nombre, email, savedFileName, id]
         );
   
         // Dar una respuesta
@@ -107,7 +107,7 @@ async function editUser(req, res, next) {
         await connection.query(
           `
         UPDATE usuario 
-        SET nombre=?, email=?, avatar=?, lastUpdate=UTC_TIMESTAMP
+        SET nombre=?, email=?, avatar=?
         WHERE id=?
       `,
           [nombre, email, savedFileName, id]

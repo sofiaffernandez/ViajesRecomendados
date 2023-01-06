@@ -21,9 +21,7 @@ async function vote(req, res, next) {
   
     try {
       connection = await getConnection();
-  
-      
-      const { id } = req.body;
+      const { id } = req.params;
       const { voto } = req.body;
       
       await votoSchema.validateAsync(req.body);

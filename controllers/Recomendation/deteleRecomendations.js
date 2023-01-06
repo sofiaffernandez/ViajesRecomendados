@@ -12,17 +12,33 @@ const deleteRecomendaciones = async (id) => {
         [id]
       );
 //Borrar votos
+const [votos] = await connection.query(
+  `
+  SELECT * FROM votos WHERE recomendacion_id = ?
+`,
+  [id]
+);
+    if (votos.length > 0 ) {
       await connection.query( `
-        DELETE FROM votos
-        WHERE recomendacion_id=? `,
+        DELETE FROM votos WHERE recomendacion_id=? `,
         [id]
       );
+    }
 //Borrar comentarios
-      await connection.query( `
-        DELETE FROM comentarios
-        WHERE recomendacion_id=? `,
-        [id]
-      );
+const [comentarios] = await connection.query(
+  `
+  SELECT * FROM comentarios WHERE recomendacion_id = ?
+`,
+  [id]
+);
+if (comentarios.length > 0) {
+  await connection.query( `
+  DELETE FROM comentarios
+  WHERE recomendacion_id=? `,
+  [id]
+);
+
+}
       return;
     }
     finally {

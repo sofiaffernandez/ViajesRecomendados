@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 app.post("/recomendation", publicaRecomendacion);
 
 // Votar recomendaciones de otros usuarios
-app.post("/recomendation/:id/votes", /* hay que verificar el usuario antes */  vote);
+app.post("/recomendation/:id/votar", /* hay que verificar el usuario antes */  vote);
 
 
 // Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
@@ -53,7 +53,7 @@ app.put("/users/:id",/* hay que verificar el usuario antes */ editUser);
 app.delete("/recomendation/:id", /* hay que verificar el usuario antes */  deleteRecomendacionControlador);
 
 // Publicar comentarios en las recomendaciones
-app.post("/recomendation/:id/comments", /* hay que verificar el usuario antes */  publishComments);
+app.post("/recomendation/:id/commentar", /* hay que verificar el usuario antes */  publishComments);
 
 //Middleware 
 app.use ((error, req, res, next) =>{
