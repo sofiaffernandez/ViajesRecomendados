@@ -1,6 +1,6 @@
 const { getConnection } = require("../../db");
 const jsonwebtoken = require("jsonwebtoken");
-
+const Joi = require("@hapi/joi");
 const { generateError } = require("../../helpers");
 
 const loginUserSchema = Joi.object().keys({
@@ -10,7 +10,7 @@ const loginUserSchema = Joi.object().keys({
       .error(
         generateError("El campo email debe existir y ser un email válido", 400)
       ),
-    password: Joi.string()
+    contraseña: Joi.string()
       .min(8)
       .required()
       .error(
@@ -27,23 +27,21 @@ async function loginUser(req, res, next) {
   try {
     connection = await getConnection();
     // comprobar que se reciben los datos necesarios
+    
+    const { email, contraseña } = req.body;
     await loginUserSchema.validateAsync(req.body);
-
-    const { email, password } = req.body;
 
     // Seleccionar el usuario de la base de datos y comprobar que las passwords coinciden
     const [dbUser] = await connection.query(
-      `
-      SELECT id,  
-      FROM usuario
-      WHERE email=? AND password=SHA2(?, 512)
-    `,
-      [email, password]
+      `SELECT id  
+      FROM usuarios
+      WHERE email=? AND contraseña=SHA2(?, 512)`,
+      [email, contraseña]
     );
 
     if (dbUser.length === 0) {
       throw generateError(
-        "No hay ningún usuario registrado con ese email o la password es incorrecta",
+        "No hay ningún usuario registrado con ese email o la contraseña es incorrecta",
         401
       );
     } 
@@ -61,7 +59,7 @@ async function loginUser(req, res, next) {
     res.send({
       status: "ok",
       data: {
-        token,
+        token
       },
     });
   } catch (error) {
