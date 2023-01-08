@@ -4,8 +4,10 @@
 ## DESCRIPCIÓN
 
 Implementar una API que permita gestionar un portal donde los usuarios puedan publicar recomendaciones de viaje de sitios o experiencias poco conocidas.
-###ENDPOINTS
-ANÓNIMO (no hace falta verifcar el usuario):
+
+### ENDPOINTS
+
+### ANÓNIMO (no hace falta verifcar el usuario):
 #### Buscar recomendaciones por lugar, categoría
 app.get("/recomendacion/buscar", )
 **VALIDACIONES**
@@ -46,8 +48,9 @@ app.post("/usuario/crear", nuevoUsuario);
 > - Enviamos un mensaje de confirmación de registro
 > - Metemos el usuario en la base de datos sin activar
 
-USUARIOS REGISTRADOS (hay que verificar el usuario antes):
-** Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)**
+### USUARIOS REGISTRADOS (hay que verificar el usuario antes):
+
+**Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)**
 app.post("/recomendacion", esUsuario, nuevaRecomendacion);
 
 #### VALIDACIONES
