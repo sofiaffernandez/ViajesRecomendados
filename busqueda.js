@@ -1,18 +1,16 @@
 
 //buscador por ciudad, categoria y votos
 
-const { getConnection } = require("db");
+const { getConnection } = require("initdb");
 
 async function listEntries(req, res, next) {
     let connection;
 
     try {
     connection = await getConnection();
-    //  Querystring:
-    //  search: para listar solo las entradas que contengan su valor en place o description
-    //  order: para ordernar el listado por voteAverage, place o date
-    //  direction: para la dirección de la ordenación desc o asc
-    const { search, order, direction } = req.query;
+
+    //buscador
+    const { search, order } = req.query;
 
     // Proceso la dirección de orden
     const orderDirection =
@@ -46,7 +44,7 @@ async function listEntries(req, res, next) {
         queryResults = await connection.query(
         `
         SELECT votos.voto
-        (SELECT AVG(voto) FROM votos WHERE entry_id=votos.id) AS voteAverage
+        (SELECT AVG(votos) FROM votos WHERE entry_id=votos.id) AS voteAverage
         FROM votos 
         ORDER BY ${orderBy} ${orderDirection}`
         );
