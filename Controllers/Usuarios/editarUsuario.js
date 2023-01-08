@@ -19,8 +19,8 @@ async function editUser(req, res, next) {
     const { id } = req.params;
     const { email, nombre } = req.body;
 
-    // Comprobar que el id de usuario que queremos cambiar es el mismo que firma la petición o bien es admin
-    if (req.auth.id !== Number(id) && req.auth.role !== "admin") {
+    // Comprobar que el id de usuario que queremos cambiar es el mismo que firma la petición 
+    if (req.auth.id !== Number(id)) {
       throw generateError("No tienes permisos para editar este usuario", 403);
     }
 

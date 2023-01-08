@@ -18,7 +18,7 @@ async function borrarFotoRecomendacion(req, res, next) {
 
     // Comprobar que el usuario puede editar esta entrada
     const [currentEntry] = current;
-    if (currentEntry.user_id !== req.auth.id && req.auth.role !== "admin") {
+    if (currentEntry.user_id !== req.auth.id) {
       throw generateError("No tienes permisos para editar esta entrada", 403);
     }
 
