@@ -1,7 +1,8 @@
-const mysql =require("mysql2/promise");
+require("dotenv").config();
+const mysql = require("mysql2/promise");
 const {MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE} = process.env;
 let pool;
-const getConnection = async () => {
+async function getConnection() {
     if (!pool){
         pool = mysql.createPool({
             connectionLimit: 10,
@@ -12,8 +13,7 @@ const getConnection = async () => {
             timezone: "Z",
         });
     }
-     return await pool.getConnection();
-  
+    return await pool.getConnection();
 }
 
 module.exports = {
