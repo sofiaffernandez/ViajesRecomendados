@@ -2,7 +2,7 @@ const { getConnection } = require("../../DB/db");
 const jsonwebtoken = require("jsonwebtoken");
 const { generateError } = require("../../helpers");
 
-const { loginUserSchema } = require("../../Schemas/Usuarios");
+const { loginUserSchema } = require("../../Schemas/Usuarios/schemasUsuarios");
 
 async function loginUsuario(req, res, next) {
   let connection;

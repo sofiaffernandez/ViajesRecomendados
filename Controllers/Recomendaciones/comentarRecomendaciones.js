@@ -1,5 +1,5 @@
 const { getConnection } = require("../../DB/db");
-const { newComentarioSchema } = require("../../Schemas/Recomendaciones");
+const { newComentarioSchema } = require("../../Schemas/Recomendaciones/schemasRecomendaciones");
 async function votarRecomendacion(req, res, next) {
   let connection;
   try {

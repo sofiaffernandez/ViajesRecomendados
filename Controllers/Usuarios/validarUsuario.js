@@ -1,4 +1,4 @@
-const { getConnection } = require("../../db");
+const { getConnection } = require("../../DB/db");
 const { generateError } = require("../../helpers");
 
 async function validarUsuario(req, res, next) {

@@ -1,6 +1,6 @@
 const { getConnection } = require("../../DB/db");
 const { randomString, sendMail, generateError } = require("../../helpers");
-const { newUserSchema } = require("../../Schemas/Usuarios");
+const { newUserSchema } = require("../../Schemas/Usuarios/schemasUsuarios");
 
 async function newUser(req, res, next) {
   let connection;

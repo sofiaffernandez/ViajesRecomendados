@@ -57,7 +57,7 @@ const helpers = require("./helpers");
 // Ver detalle de una recomendación
 
 // Login (con email y password)
-app.post("/usuario/login", loginUsuario );
+app.post("/usuario/login", loginUsuario);
 //Validar usuario
 app.post("/usuario/validar", validarUsuario)
 // Registro (nombre, email y password)
@@ -94,10 +94,10 @@ app.use ((error, req, res, next) =>{
 })
 //No existe
 app.use ((req, res) => {
-    res.status(404).send({
-    status: "error",
-    message: "Not found",
-    });
+  res.status(404).send({
+  status: "error",
+  message: "Not found",
+  });
 });
 
 const port = process.env.PORT || 4000;

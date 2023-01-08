@@ -6,7 +6,7 @@ const {
   generateError,
 } = require("../../helpers");
 
-const { editUserSchema } = require("../../Schemas/Usuarios");
+const { editUserSchema } = require("../../Schemas/Usuarios/schemasUsuarios");
 
 async function editUser(req, res, next) {
   let connection;

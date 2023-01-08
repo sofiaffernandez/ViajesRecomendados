@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const { getConnection } = require("./db");
-const { formatDateToDB } = require("./../helpers");
 
 let connection;
 
@@ -10,13 +9,13 @@ async function main() {
     // Conseguir conexión a la base de datos
     connection = await getConnection();
 
-    // Borrar las tablas si existen (diary, diary_votes)
+    // Borrar las tablas si existen 
     console.log("Borrando tablas");
     await connection.query("DROP TABLE IF EXISTS usuarios");
-    await connection.query("DROP TABLE IF EXISTS diary");
-    await connection.query("DROP TABLE IF EXISTS diary_votes");
-    await connection.query("DROP TABLE IF EXISTS diary_images");
-
+    await connection.query("DROP TABLE IF EXISTS recomendaciones");
+    await connection.query("DROP TABLE IF EXISTS recomendaciones_fotos");
+    await connection.query("DROP TABLE IF EXISTS votos");
+    await connection.query("DROP TABLE IF EXISTS comentarios");
     // Crear las tablas de nuevo
     console.log("Creando tablas");
     // Tabla usuarios:
