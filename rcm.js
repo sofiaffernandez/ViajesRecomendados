@@ -1,5 +1,8 @@
 const express = require("express")
 const app = express()
+
+
+
 // Crear una nueva recomendación de viaje
 app.post('/recommendations', (req, res) => {
     const recommendation = req.body;
@@ -50,4 +53,5 @@ app.delete('/recommendations/:id', (req, res) => {
     app.listen(port, () => {
     console.log(`API de recomendaciones de viajes escuchando en el puerto ${port}`);
 });
+
 
