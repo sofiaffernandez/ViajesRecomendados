@@ -4,7 +4,7 @@
 ## DESCRIPCIÓN
 
 Implementar una API que permita gestionar un portal donde los usuarios puedan publicar recomendaciones de viaje de sitios o experiencias poco conocidas.
-### ENDPOINTS
+###ENDPOINTS
 ANÓNIMO (no hace falta verifcar el usuario):
 // Buscar recomendaciones por lugar, categoría
 // Poder ordenar los resultados de búsqueda por votos
@@ -12,30 +12,34 @@ ANÓNIMO (no hace falta verifcar el usuario):
 
 #### Login (con email y password)
 app.post("/usuario/login", loginUsuario);
+
 **VALIDACIONES**
 > - Se extraen del body los datos requeridos
 > - Validar que se reciben los datos necesarios
 > - Se selecionan el usuario de la base de datos y comprobar que coiciden las contraseñas
 
-#### Validar usuario
+**Validar usuario**
 app.post("/usuario/validar", validarUsuario);
+
 **VALIDACIONES**
 > - Se extraen del body los datos requeridos
 > - Se comprueba si esta validado
 > - Se actualiza la tabla marcando como activo al usuario 
 
-#### Registro (nombre, email y password)
+**Registro (nombre, email y password)**
 app.post("/usuario/crear", nuevoUsuario);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Se extraen del body los datos requeridos
 > - Comprobamos que no existe un usuario con ese mismo email en la base de datos
 > - Enviamos un mensaje de confirmación de registro
 > - Metemos el usuario en la base de datos sin activar
 
 USUARIOS REGISTRADOS (hay que verificar el usuario antes):
-#### Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
+** Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)**
 app.post("/recomendacion", esUsuario, nuevaRecomendacion);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Validamos que sea un usuario registrado
 > - Validamos los datos introduccidos según el esquema
 > - Se extraen del body los datos requeridos
@@ -43,9 +47,10 @@ app.post("/recomendacion", esUsuario, nuevaRecomendacion);
 > - Si hay imagenes, cada una se procesa y se guarda en la tabla recomendaciones_fotos con la referencia a la entrada
 
 
-#### Votar recomendaciones de otros usuarios
+**Votar recomendaciones de otros usuarios**
 app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecomendacion);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Validamos que sea un usuario registrado
 > - Validamos que la recomendación existe
 > - Validamos los datos introduccidos según el esquema
@@ -53,9 +58,10 @@ app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecome
 > - Comprobamos que no hay ningún voto previo con el usuario
 > - Guardamos el voto en la base de datos 
 
-#### Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
+**Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)**
 app.put("/usuario/:id", esUsuario, editarUsuario);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Validamos que sea un usuario registrado
 > - Validamos la información del body según esquemas
 > - Validamos que el id del usuario es el mismo que firma la petición
@@ -64,9 +70,10 @@ app.put("/usuario/:id", esUsuario, editarUsuario);
 > - Si cambiamos el email, lo validamos
 > - Actualizamos el usuario en la base de datos
 
-#### Borrar sus recomendaciones
+**Borrar sus recomendaciones**
 app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomendacion);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Validamos que sea un usuario registrado
 > - Validamos que la recomendación existe
 > - Seleccionamos la recomendación con la id
@@ -75,9 +82,10 @@ app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomenda
 > - Borramos la imagen que coincida de la petición y la base de datos
 
 
-#### Borrar las fotos de sus  recomendaciones
+**Borrar las fotos de sus  recomendaciones**
 app.delete("/recomendacion/:id/fotos", esUsuario, recomendacionExiste, borrarFotoRecomendacion);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Validamos que sea un usuario registrado
 > - Validamos que la recomendación existe
 > - Seleccionamos la recomendación con la id
@@ -87,9 +95,10 @@ app.delete("/recomendacion/:id/fotos", esUsuario, recomendacionExiste, borrarFot
 > - Borramos los votos asociados
 > - Borramos los comentarios asociados
 
-#### Publicar comentarios en las recomendaciones
+**Publicar comentarios en las recomendaciones**
 app.post("/recomendacion/:id/commentar", esUsuario, recomendacionExiste, comentarRecomendacion);
-**VALIDACIONES**
+
+#### VALIDACIONES
 > - Validamos que sea un usuario registrado
 > - Validamos que la recomendación existe
 > - Validamos los datos introduccidos
@@ -125,3 +134,59 @@ app.post("/recomendacion/:id/commentar", esUsuario, recomendacionExiste, comenta
 En los archivos de la API se encuentra el archivo ***API_SHOP.postman_collection.json*** . Se puede descargar para importar en nuestro postman personal y así probar los diferentes endpoints.
 
 ------------
+#### SQL
+Table: usuarios
+
+Columns:
+> - id int AI PK
+> - nombre varchar(200)
+> - activo tinyint(1)
+> - email varchar(200)
+> - contraseña varchar(512)
+> - avatar varchar(500)
+> - created_at datetime
+> - codigo_validacion varchar(100)
+> - eliminado tinyint(1)
+> - ultimo_cambio_contraseña datetime
+> - codigo_recuperacionvarchar(100)
+
+Table: recomendaciones
+
+Columns:
+> - id int AI PK
+> - titulo varchar(50)
+> - categoria varchar(50)
+> - lugar varchar(50)
+> - entradilla varchar(255)
+> - texto text
+> - created_at datetime
+> - autor_id int
+
+Table: recomendaciones_fotos
+
+Columns:
+> - id int AI PK
+> - foto varchar(64)
+> - created_at datetime
+> - recomendacion_id int
+
+
+Table: comentarios
+
+Columns:
+> - id int AI PK
+> - comentario text
+> - created_at datetime
+> - lastUpdate datetime
+> - usuario_id int
+> - recomendacion_id int
+
+Table: votos
+
+Columns:
+> - id int AI PK
+> - voto tinyint
+> - created_at datetime
+> - lastUpdate datetime
+> - usuario_id int
+> - recomendacion_id int
