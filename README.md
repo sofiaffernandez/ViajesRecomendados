@@ -13,88 +13,88 @@ ANÓNIMO (no hace falta verifcar el usuario):
 #### Login (con email y password)
 app.post("/usuario/login", loginUsuario);
 **VALIDACIONES**
-1. - Se extraen del body los datos requeridos
-2. - Validar que se reciben los datos necesarios
-3. - Se selecionan el usuario de la base de datos y comprobar que coiciden las contraseñas
+> - Se extraen del body los datos requeridos
+> - Validar que se reciben los datos necesarios
+> - Se selecionan el usuario de la base de datos y comprobar que coiciden las contraseñas
 
 #### Validar usuario
 app.post("/usuario/validar", validarUsuario);
 **VALIDACIONES**
-1. - Se extraen del body los datos requeridos
-2. - Se comprueba si esta validado
-3. - Se actualiza la tabla marcando como activo al usuario 
+> - Se extraen del body los datos requeridos
+> - Se comprueba si esta validado
+> - Se actualiza la tabla marcando como activo al usuario 
 
 #### Registro (nombre, email y password)
 app.post("/usuario/crear", nuevoUsuario);
 **VALIDACIONES**
-1. - Se extraen del body los datos requeridos
-2. - Comprobamos que no existe un usuario con ese mismo email en la base de datos
-3. - Enviamos un mensaje de confirmación de registro
-4. - Metemos el usuario en la base de datos sin activar
+> - Se extraen del body los datos requeridos
+> - Comprobamos que no existe un usuario con ese mismo email en la base de datos
+> - Enviamos un mensaje de confirmación de registro
+> - Metemos el usuario en la base de datos sin activar
 
 USUARIOS REGISTRADOS (hay que verificar el usuario antes):
 #### Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
 app.post("/recomendacion", esUsuario, nuevaRecomendacion);
 **VALIDACIONES**
-1. - Validamos que sea un usuario registrado
-2. - Validamos los datos introduccidos según el esquema
-3. - Se extraen del body los datos requeridos
-4. - Se guardan en la tabla recomendaciones
-5. - Si hay imagenes, cada una se procesa y se guarda en la tabla recomendaciones_fotos con la referencia a la entrada
+> - Validamos que sea un usuario registrado
+> - Validamos los datos introduccidos según el esquema
+> - Se extraen del body los datos requeridos
+> - Se guardan en la tabla recomendaciones
+> - Si hay imagenes, cada una se procesa y se guarda en la tabla recomendaciones_fotos con la referencia a la entrada
 
 
 #### Votar recomendaciones de otros usuarios
 app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecomendacion);
 **VALIDACIONES**
-1. - Validamos que sea un usuario registrado
-2. - Validamos que la recomendación existe
-3. - Validamos los datos introduccidos según el esquema
-4. - Se extraen del body los datos requeridos
-5. - Comprobamos que no hay ningún voto previo con el usuario
-6. - Guardamos el voto en la base de datos 
+> - Validamos que sea un usuario registrado
+> - Validamos que la recomendación existe
+> - Validamos los datos introduccidos según el esquema
+> - Se extraen del body los datos requeridos
+> - Comprobamos que no hay ningún voto previo con el usuario
+> - Guardamos el voto en la base de datos 
 
 #### Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
 app.put("/usuario/:id", esUsuario, editarUsuario);
 **VALIDACIONES**
-1. - Validamos que sea un usuario registrado
-2. - Validamos la información del body según esquemas
-3. - Validamos que el id del usuario es el mismo que firma la petición
-4. - Comprobamos que existe
-5. - Si enviamos foto, se guarda el avatar
-6. - Si cambiamos el email, lo validamos
-7. - Actualizamos el usuario en la base de datos
+> - Validamos que sea un usuario registrado
+> - Validamos la información del body según esquemas
+> - Validamos que el id del usuario es el mismo que firma la petición
+> - Comprobamos que existe
+> - Si enviamos foto, se guarda el avatar
+> - Si cambiamos el email, lo validamos
+> - Actualizamos el usuario en la base de datos
 
 #### Borrar sus recomendaciones
 app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomendacion);
 **VALIDACIONES**
-1. - Validamos que sea un usuario registrado
-2. - Validamos que la recomendación existe
-3. - Seleccionamos la recomendación con la id
-4. - Comprobamos que el usuario puede editar esta entrada
-5. - Seleccionamos la imagen
-6. - Borramos la imagen que coincida de la petición y la base de datos
+> - Validamos que sea un usuario registrado
+> - Validamos que la recomendación existe
+> - Seleccionamos la recomendación con la id
+> - Comprobamos que el usuario puede editar esta entrada
+> - Seleccionamos la imagen
+> - Borramos la imagen que coincida de la petición y la base de datos
 
 
 #### Borrar las fotos de sus  recomendaciones
 app.delete("/recomendacion/:id/fotos", esUsuario, recomendacionExiste, borrarFotoRecomendacion);
 **VALIDACIONES**
-1. - Validamos que sea un usuario registrado
-2. - Validamos que la recomendación existe
-3. - Seleccionamos la recomendación con la id
-4. - Comprobamos que el usuario puede editar esta entrada
-5. - Borramos la recomendación
-6. - Borramos la imagenes asociadas
-7. - Borramos los votos asociados
-8. - Borramos los comentarios asociados
+> - Validamos que sea un usuario registrado
+> - Validamos que la recomendación existe
+> - Seleccionamos la recomendación con la id
+> - Comprobamos que el usuario puede editar esta entrada
+> - Borramos la recomendación
+> - Borramos la imagenes asociadas
+> - Borramos los votos asociados
+> - Borramos los comentarios asociados
 
 #### Publicar comentarios en las recomendaciones
 app.post("/recomendacion/:id/commentar", esUsuario, recomendacionExiste, comentarRecomendacion);
 **VALIDACIONES**
-1. - Validamos que sea un usuario registrado
-2. - Validamos que la recomendación existe
-3. - Validamos los datos introduccidos
-4. - Comprobamos que la entrada existe
-5. - Guardamos el comentario en la base de datos
+> - Validamos que sea un usuario registrado
+> - Validamos que la recomendación existe
+> - Validamos los datos introduccidos
+> - Comprobamos que la entrada existe
+> - Guardamos el comentario en la base de datos
 
 
 ------------
