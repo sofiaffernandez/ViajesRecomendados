@@ -1,7 +1,7 @@
 const jsonwebtoken = require("jsonwebtoken");
-const { getConnection } = require("../../db");
+const { getConnection } = require("../DB/db");
 
-async function isUser(req, res, next) {
+async function esUsuario(req, res, next) {
   let connection;
 
   try {
@@ -27,12 +27,11 @@ async function isUser(req, res, next) {
       throw tokenError;
     }
 
-    // Sacamos de la base de datos información de la última vez
-    // que el usuario cambió su pass o email
+    // Sacamos de la base de datos información de la última vez que el usuario cambió su contraseña o email
     const [result] = await connection.query(
       `
-      SELECT email
-      FROM usuarios
+      SELECT ultimo_cambio_contraseña
+      FROM usuario
       WHERE id=?
     `,
       [tokenInfo.id]
@@ -69,4 +68,4 @@ async function isUser(req, res, next) {
   }
 }
 
-module.exports = isUser;
+module.exports = esUsuario;
