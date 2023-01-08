@@ -28,7 +28,7 @@ async function votarRecomendacion(req, res, next) {
 
     res.send({
       status: "ok",
-      message: `Se guardó el voto (${voto} puntos) a la recomendación ${id}`,
+      message: `Se guardó el comentario a la recomendación ${id}`,
     });
   } catch (error) {
     next(error);

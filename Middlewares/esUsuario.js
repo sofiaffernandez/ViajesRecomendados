@@ -31,7 +31,7 @@ async function esUsuario(req, res, next) {
     const [result] = await connection.query(
       `
       SELECT ultimo_cambio_contraseña
-      FROM usuario
+      FROM usuarios
       WHERE id=?
     `,
       [tokenInfo.id]

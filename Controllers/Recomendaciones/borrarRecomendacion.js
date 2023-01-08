@@ -10,13 +10,13 @@ async function borrarRecomendacion(req, res, next) {
 
     // Comprobar que existe esa id y si no dar error404
     const [current] = await connection.query(
-      `SELECT usuario_id
+      `SELECT autor_id
       FROM recomendaciones
       WHERE id=? `,
       [id]
     );
 
-    if (current[0].user_id !== req.auth.id && req.auth.role !== "admin") {
+    if (current[0].autor_id !== req.auth.id) {
       throw generateError("No tienes permisos para borrar esta entrada", 403);
     }
 

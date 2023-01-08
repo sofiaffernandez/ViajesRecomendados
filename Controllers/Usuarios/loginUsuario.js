@@ -11,14 +11,14 @@ async function loginUsuario(req, res, next) {
     //Validar que se reciben los datos necesarios
     await loginUserSchema.validateAsync(req.body);
 
-    const { email, password } = req.body;
+    const { email, contraseña } = req.body;
 
     // Seleccionar el usuario de la base de datos y comprobar que las passwords coinciden
     const [dbUser] = await connection.query(
       `SELECT id,  activo
       FROM usuarios
-      WHERE email=? AND password=SHA2(?, 512)`,
-      [email, password]
+      WHERE email=? AND contraseña=SHA2(?, 512)`,
+      [email, contraseña]
     );
 
     if (dbUser.length === 0) {
@@ -26,16 +26,15 @@ async function loginUsuario(req, res, next) {
         "No hay ningún usuario registrado con ese email o la password es incorrecta",
         401
       );
-    } else if (!dbUser[0].active) {
-      throw generateError(
-        "El usuario está registrado pero no activado. Por favor revisa tu email y activalo",
-        401
-      );
-    }
+    } // else if (!dbUser[0].active) {
+      //throw generateError(
+       // "El usuario está registrado pero no activado. Por favor revisa tu email y activalo",
+      //  401
+     // );
+    //}
     // Generar token con información del usuario
     const tokenInfo = {
-      id: dbUser[0].id,
-      role: dbUser[0].role,
+      id: dbUser[0].id
     };
 
     const token = jsonwebtoken.sign(tokenInfo, process.env.SECRET, {
