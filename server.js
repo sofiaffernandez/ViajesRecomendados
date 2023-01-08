@@ -53,8 +53,11 @@ const helpers = require("./helpers");
 
 //ANÓNIMO (no hace falta verifcar el usuario):
 // Buscar recomendaciones por lugar, categoría
+app.get("/recomendacion/buscar", )
 // Poder ordenar los resultados de búsqueda por votos
+app.get("/recomendacion/ordenar", )
 // Ver detalle de una recomendación
+app.get("/recomendacion/detalle", ) 
 
 // Login (con email y password)
 app.post("/usuario/login", loginUsuario);
