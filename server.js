@@ -47,6 +47,7 @@ const helpers = require("./helpers");
     const editarUsuario = require("./Controllers/Usuarios/editarUsuario")
     const loginUsuario = require("./Controllers/Usuarios/loginUsuario")
     const nuevoUsuario = require("./Controllers/Usuarios/nuevoUsuario")
+    const cambioContraseña = require ("./Controllers/Usuarios/cambioContraseña")
 
     // ENDPOINTS DE CONTENIDO 
 
@@ -74,6 +75,8 @@ app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecome
 
 // Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
 app.put("/usuario/:id", esUsuario, editarUsuario);
+//Gestión del perfil (cambio de contraseña)
+app.post("/usuario/contrasena", esUsuario,  cambioContraseña);
 
 // Borrar sus recomendaciones
 app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomendacion);
