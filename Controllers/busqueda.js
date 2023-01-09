@@ -1,7 +1,7 @@
 
 //buscador por ciudad, categoria y votos
 
-const { getConnection } = require("../ViajesRecomendados/DB/db");
+const { getConnection } = require("../../DB/db");
 
 async function listEntries(req, res, next) {
     let connection;

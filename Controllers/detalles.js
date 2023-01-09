@@ -1,4 +1,4 @@
-const { getConnection } = require("../ViajesRecomendados/DB/db");
+const { getConnection } = require("../../DB/db");
 const { votoSchema } = require("../../Schemas/Recomendaciones/schemasRecomendaciones");
 const { generateError } = require("../../helpers");
 
