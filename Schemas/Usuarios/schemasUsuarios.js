@@ -45,7 +45,35 @@ const newUserSchema = Joi.object().keys({
         )
       ),
   });
+
+//Esquema validación cambio contraseña
+
+const editUserPasswordSchema = Joi.object().keys({
+  viejaContraseña: Joi.string()
+    .min(8)
+    .required()
+    .alphanum()
+    .error(
+      generateError(
+        "El campo oldPassword debe existir y ser mayor de 8 caracteres",
+        400
+      )
+    ),
+  nuevaContraeña: Joi.string()
+    .min(8)
+    .required()
+    .alphanum()
+    .invalid(Joi.ref("oldPassword"))
+    .error(
+      generateError(
+        "El campo newPassword debe existir, ser diferente a oldPassword y ser mayor de 8 caracteres",
+        400
+      )
+    ),
+});
+
 module.exports = {
+  editUserPasswordSchema,
   newUserSchema,
   loginUserSchema
 }
