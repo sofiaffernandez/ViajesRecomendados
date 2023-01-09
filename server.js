@@ -47,7 +47,6 @@ const helpers = require("./helpers");
     const editarUsuario = require("./Controllers/Usuarios/editarUsuario")
     const loginUsuario = require("./Controllers/Usuarios/loginUsuario")
     const nuevoUsuario = require("./Controllers/Usuarios/nuevoUsuario")
-    const validarUsuario = require("./Controllers/Usuarios/validarUsuario")
 
     // ENDPOINTS DE CONTENIDO 
 
@@ -61,8 +60,7 @@ app.get("/recomendacion/detalle", )
 
 // Login (con email y password)
 app.post("/usuario/login", loginUsuario);
-//Validar usuario
-app.post("/usuario/validar", validarUsuario)
+
 // Registro (nombre, email y password)
 app.post("/usuario/crear", nuevoUsuario);
 
