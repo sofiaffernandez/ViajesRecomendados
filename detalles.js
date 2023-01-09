@@ -1,6 +1,6 @@
 const { getConnection } = require("../ViajesRecomendados/DB/db");
-// const { votoSchema } = require("../../Schemas/Recomendaciones/schemasRecomendaciones");
-// const { generateError } = require("../../helpers");
+const { votoSchema } = require("../../Schemas/Recomendaciones/schemasRecomendaciones");
+const { generateError } = require("../../helpers");
 
 async function verDetalle(req, res, next) {
     let connection;
