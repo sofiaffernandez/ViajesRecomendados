@@ -1,7 +1,7 @@
 
 //buscador por ciudad, categoria y votos
 
-const { getConnection } = require("initdb");
+const { getConnection } = require("");
 
 async function listEntries(req, res, next) {
     let connection;
@@ -10,7 +10,7 @@ async function listEntries(req, res, next) {
     connection = await getConnection();
 
     //buscador
-    const { search, order } = req.query;
+    const { categoria, lugar } = req.query;
 
     // Proceso la dirección de orden
     const orderDirection =
@@ -22,30 +22,25 @@ async function listEntries(req, res, next) {
         case "voteAverage":
         orderBy = "voteAverage";
         break;
-        case "place":
-        orderBy = "place";
+        case "lugar":
+        orderBy = "lugar";
         break;
-        default:
-        orderBy = "date";
     }
     let queryResults;
-    if (search) {
+    //buscador por categoria y lugar 
+    if (categoria, lugar) {
         queryResults = await connection.query(
         `
-        SELECT recomendaciones.lugar, recomendaciones.categoria
-        (SELECT AVG(recomendaciones) FROM recomendaciones WHERE entry_id=recomendaciones.lugar) AS voteAverage
-        FROM recomendaciones 
-        WHERE place LIKE ? OR description LIKE ?
-        ORDER BY ${orderBy} ${orderDirection}
+        SELECT * FROM recommendations WHERE lugar =? AND categoria =? 
         `,
-        [`%${search}%`, `%${search}%`]
+        [`%${lugar}%`, `%${categoria}%`]
     );
     } else {
+        //ordenar resultados de busqueda por votos
         queryResults = await connection.query(
         `
-        SELECT votos.voto
-        (SELECT AVG(votos) FROM votos WHERE entry_id=votos.id) AS voteAverage
-        FROM votos 
+        SELECT * FROM votos ORDER BY voto DESC;
+        SELECT * FROM recomendaciones JOIN votos ON recomendaciones.id = votos.recomendacion_id ORDER BY votos.votos DESC";
         ORDER BY ${orderBy} ${orderDirection}`
         );
     }
