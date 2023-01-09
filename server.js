@@ -37,10 +37,15 @@ const helpers = require("./helpers");
 
 //Importar controllers
     //Recomendaciones
+    //Borrar foto de la recomendación
     const borrarFotoRecomendacion = require("./Controllers/Recomendaciones/borrarFotoRecomendacion")
+    //Borrar la recomendación
     const borrarRecomendacion = require("./Controllers/Recomendaciones/borrarRecomendacion")
+    //Comentar una recomendación
     const comentarRecomendacion = require("./Controllers/Recomendaciones/comentarRecomendaciones")
+    //Publicar una recomendación nueva
     const nuevaRecomendacion = require("./Controllers/Recomendaciones/nuevaRecomendacion")
+    //Votar la recomendación
     const votarRecomendacion = require("./Controllers/Recomendaciones/votarRecomendacion")
     
     
@@ -57,9 +62,13 @@ const helpers = require("./helpers");
 
 
     //Usuarios
+    //Editar usuario (cambiar foto de perfil)
     const editarUsuario = require("./Controllers/Usuarios/editarUsuario")
+    //Hacer login de un usuario ya registrado
     const loginUsuario = require("./Controllers/Usuarios/loginUsuario")
+    //Crear un nuevo usuario
     const nuevoUsuario = require("./Controllers/Usuarios/nuevoUsuario")
+    //Cambiar la contraseña de un usuario ya registrado
     const cambioContraseña = require ("./Controllers/Usuarios/cambioContraseña")
 
     // ENDPOINTS DE CONTENIDO 
@@ -70,7 +79,7 @@ app.get("/recomendacion/buscar", listEntries)
 // Poder ordenar los resultados de búsqueda por votos
 app.get("/recomendacion/ordenar", voteAverage)
 // Ver detalle de una recomendación
-app.get("/recomendacion/detalle", verDetalle) 
+app.get("/recomendacion/:id/detalle", verDetalle) 
 // Login (con email y password)
 app.post("/usuario/login", loginUsuario);
 
