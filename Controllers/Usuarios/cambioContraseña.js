@@ -2,7 +2,7 @@ const { getConnection } = require("../../DB/db");
 
 const { generateError } = require("../../helpers");
 
-const { editUserPasswordSchema } = require("../../validators/userValidators");
+const { editUserPasswordSchema } = require("../../Schemas/Usuarios/schemasUsuarios");
 
 async function cambioContraseña(req, res, next) {
   let connection;
