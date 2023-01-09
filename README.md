@@ -9,19 +9,24 @@ Implementar una API que permita gestionar un portal donde los usuarios puedan pu
 
 ### ANÓNIMO (no hace falta verifcar el usuario):
 #### Buscar recomendaciones por lugar, categoría
-app.get("/recomendacion/buscar", )
+app.get("/recomendacion/buscar", listEntries)
 **VALIDACIONES**
-> -
+> - Creo el buscador
+> - Proceso la direccion del orden
+> - Busco por categoria y lugar
 
 #### Poder ordenar los resultados de búsqueda por votos
-app.get("/recomendacion/ordenar", )
+app.get("/recomendacion/ordenar", voteAverage)
 **VALIDACIONES**
-> -
+> - Creo el buscador
+> - Proceso la direccion del orden
+> - Busco por votos
 
 #### Ver detalle de una recomendación
-app.get("/recomendacion/detalle", )
+app.get("/recomendacion/detalle", verDetalle)
 **VALIDACIONES**
-> -
+> - Comprobar que la entrada existe
+> - Seleccionamos datos, fotos, comentarios, votos
 
 #### Login (con email y password)
 app.post("/usuario/login", loginUsuario);
