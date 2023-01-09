@@ -31,13 +31,6 @@ app.post("/usuario/login", loginUsuario);
 > - Validar que se reciben los datos necesarios
 > - Se selecionan el usuario de la base de datos y comprobar que coiciden las contraseñas
 
-**Validar usuario**
-app.post("/usuario/validar", validarUsuario);
-
-**VALIDACIONES**
-> - Se extraen del body los datos requeridos
-> - Se comprueba si esta validado
-> - Se actualiza la tabla marcando como activo al usuario 
 
 **Registro (nombre, email y password)**
 app.post("/usuario/crear", nuevoUsuario);
