@@ -42,6 +42,19 @@ const helpers = require("./helpers");
     const comentarRecomendacion = require("./Controllers/Recomendaciones/comentarRecomendaciones")
     const nuevaRecomendacion = require("./Controllers/Recomendaciones/nuevaRecomendacion")
     const votarRecomendacion = require("./Controllers/Recomendaciones/votarRecomendacion")
+    
+    
+    //buscador recomendaciones
+    const listEntries = require("./Controllers/busqueda")
+
+
+    //buscador por voto
+    const voteAverage = require("./Controllers/busqueda")
+
+
+    //detalles recomendaciones
+    const verDetalle = require("./Controllers/detalles")
+
 
     //Usuarios
     const editarUsuario = require("./Controllers/Usuarios/editarUsuario")
@@ -53,12 +66,11 @@ const helpers = require("./helpers");
 
 //ANÓNIMO (no hace falta verifcar el usuario):
 // Buscar recomendaciones por lugar, categoría
-app.get("/recomendacion/buscar", )
+app.get("/recomendacion/buscar", listEntries)
 // Poder ordenar los resultados de búsqueda por votos
-app.get("/recomendacion/ordenar", )
+app.get("/recomendacion/ordenar", voteAverage)
 // Ver detalle de una recomendación
-app.get("/recomendacion/detalle", ) 
-
+app.get("/recomendacion/detalle", verDetalle) 
 // Login (con email y password)
 app.post("/usuario/login", loginUsuario);
 
