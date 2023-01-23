@@ -50,15 +50,15 @@ const helpers = require("./helpers");
     
     
     //buscador recomendaciones
-    const listEntries = require("./Controllers/busqueda")
+    const listEntries = require("./Controllers/Recomendaciones/busqueda")
 
 
     //buscador por voto
-    const voteAverage = require("./Controllers/busqueda")
+    const voteAverage = require("./Controllers/Recomendaciones/busqueda")
 
 
     //detalles recomendaciones
-    const verDetalle = require("./Controllers/detalles")
+    const verDetalle = require("./Controllers/Recomendaciones/detalles")
 
 
     //Usuarios

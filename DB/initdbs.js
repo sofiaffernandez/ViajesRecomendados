@@ -55,7 +55,7 @@ async function main() {
         foto VARCHAR(64) NOT NULL,
         created_at DATETIME NOT NULL,
         recomendacion_id INT NOT NULL,
-        FOREIGN KEY (recomendacion_id) REFERENCES recomendaciones(id)
+        FOREIGN KEY (recomendacion_id) REFERENCES recomendaciones(id) ON DELETE CASCADE
       )
     `);
     // Tabla de votos:
@@ -68,7 +68,7 @@ async function main() {
         usuario_id INT NOT NULL,
         FOREIGN KEY (usuario_id ) REFERENCES usuarios(id),
         recomendacion_id INT NOT NULL,
-        FOREIGN KEY (recomendacion_id) REFERENCES recomendaciones(id)
+        FOREIGN KEY (recomendacion_id) REFERENCES recomendaciones(id) ON DELETE CASCADE
       )
     `);
     // Tabla de comentarios:
@@ -81,7 +81,7 @@ async function main() {
       usuario_id INT NOT NULL,
       FOREIGN KEY (usuario_id ) REFERENCES usuarios(id),
       recomendacion_id INT NOT NULL,
-      FOREIGN KEY (recomendacion_id) REFERENCES recomendaciones(id)
+      FOREIGN KEY (recomendacion_id) REFERENCES recomendaciones(id) ON DELETE CASCADE
     )
   `);
   

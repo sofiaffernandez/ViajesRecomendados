@@ -52,7 +52,6 @@ async function editUser(req, res, next) {
       }
     } else {
       savedFileName = currentUser[0].image;
-   else {
       // Actualizar usuario en la base de datos
       await connection.query(
         `UPDATE usuarios 

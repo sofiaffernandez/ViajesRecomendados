@@ -72,7 +72,22 @@ const editUserPasswordSchema = Joi.object().keys({
     ),
 });
 
+const editUserSchema = Joi.object().keys({
+  email: Joi.string()
+    .email()
+    .error(generateError("El campo email debe contener un email válido", 400)),
+  nombre: Joi.string()
+    .max(100)
+    .error(
+      generateError(
+        "El campo nombre no debe de tener más de 100 caracteres",
+        400
+      )
+    ),
+});
+
 module.exports = {
+  editUserSchema,
   editUserPasswordSchema,
   newUserSchema,
   loginUserSchema

@@ -43,6 +43,7 @@ async function loginUsuario(req, res, next) {
         token,
       },
     });
+  }
   } catch (error) {
     next(error);
   } finally {

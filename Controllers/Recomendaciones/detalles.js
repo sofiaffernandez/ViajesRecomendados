@@ -56,7 +56,7 @@ async function verDetalle(req, res, next) {
         },
     });
     } catch (error) {
-        ext(error);
+        next(error);
     } finally {
         if (connection) connection.release();
     }
