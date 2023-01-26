@@ -1,48 +1,54 @@
-
-//buscador por ciudad, categoria y votos
-
-const { getConnection } = require("../../DB/db");
+const { getConnection } = require("../DB/db");
 
 async function listEntries(req, res, next) {
-    let connection;
+let connection;
 
-    try {
+try {
     connection = await getConnection();
 
-    //buscador
-    const { categoria, lugar } = req.query;
+    // Proceso los parámetros de búsqueda
+    const { categoria, lugar, order } = req.query;
 
     // Proceso la dirección de orden
-    const orderDirection =
-    (orderDirection) === "desc" ? "DESC" : "ASC";
+    const orderDirection = order === "desc" ? "DESC" : "ASC";
 
     // Proceso el campo de orden
     let orderBy;
     switch (order) {
-        case "voteAverage":
-        orderBy = "voteAverage";
+    case "voto":
+        orderBy = "voto";
         break;
-        case "lugar":
+    case "lugar":
         orderBy = "lugar";
         break;
+    case "categoria":
+        orderBy = "categoria";
+        break;
+    default:
+        orderBy = "voto";
+        break;
     }
+
     let queryResults;
-    //buscador por categoria y lugar 
-    if (categoria, lugar) {
+
+    // Búsqueda por categoría y lugar
+    if (categoria && lugar) {
         queryResults = await connection.query(
         `
-        SELECT * FROM recommendations WHERE lugar =? AND categoria =? 
+        SELECT * FROM recommendations 
+        WHERE lugar LIKE ? AND categoria LIKE ? 
+        ORDER BY ${orderBy} ${orderDirection}
         `,
         [`%${lugar}%`, `%${categoria}%`]
     );
     } else {
-        //ordenar resultados de busqueda por votos
+      // Ordenar resultados de búsqueda por votos
         queryResults = await connection.query(
         `
         SELECT * FROM votos ORDER BY voto DESC;
         SELECT * FROM recomendaciones JOIN votos ON recomendaciones.id = votos.recomendacion_id ORDER BY votos.votos DESC";
         ORDER BY ${orderBy} ${orderDirection}`
-        );
+    );
     }
 
     // Extraigo los resultados reales del resultado de la query
