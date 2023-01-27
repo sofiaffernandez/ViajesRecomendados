@@ -1,13 +1,16 @@
-const { getConnection } = require("../DB/db");
-const { votoSchema } = require("../Schemas/Recomendaciones/schemasRecomendaciones");
-const { generateError } = require("../helpers");
+const { getConnection } = require("../../DB/db");
+const { votoSchema } = require("../../Schemas/Recomendaciones/schemasRecomendaciones");
+const { generateError } = require("../../helpers");
 
 async function verDetalle(req, res, next) {
     let connection;
     try {
     connection = await getConnection();
+    connection = await votoSchema();
+    connection = await generateError();
     
     const { id } = req.params;
+
     
     // Comprobar que la entrada existe y si no dar un 404
 
