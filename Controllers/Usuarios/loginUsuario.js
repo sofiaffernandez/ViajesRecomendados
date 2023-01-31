@@ -15,7 +15,7 @@ async function loginUsuario(req, res, next) {
 
     // Seleccionar el usuario de la base de datos y comprobar que las passwords coinciden
     const [dbUser] = await connection.query(
-      `SELECT id,  activo
+      `SELECT id
       FROM usuarios
       WHERE email=? AND contraseña=SHA2(?, 512)`,
       [email, contraseña]
@@ -26,7 +26,7 @@ async function loginUsuario(req, res, next) {
         "No hay ningún usuario registrado con ese email o la password es incorrecta",
         401
       );
-    
+    }
     // Generar token con información del usuario
     const tokenInfo = {
       id: dbUser[0].id
@@ -43,7 +43,6 @@ async function loginUsuario(req, res, next) {
         token,
       },
     });
-  }
   } catch (error) {
     next(error);
   } finally {

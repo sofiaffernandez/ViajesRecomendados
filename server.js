@@ -125,8 +125,8 @@ app.use ((req, res) => {
   });
 });
 
-const port = process.env.PORT || 4000;
-console.log(process.env.PORT)
+const port = process.env.PORT;
+console.log(process.env.PORT || 3000)
 
 app.listen(port, () => {
   console.log(`API funcionando en http://localhost:${port} `);
