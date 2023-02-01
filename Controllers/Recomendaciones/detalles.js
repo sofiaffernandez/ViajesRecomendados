@@ -50,7 +50,7 @@ async function verDetalle(req, res, next) {
             [id]
     )
   
-    const [ detalle ] =  { datosRecomendacion, fotosRecomendacion, datosComentarios, datosVotos }
+    const detalle  =  { datosRecomendacion, fotosRecomendacion, datosComentarios, datosVotos }
   
     res.send({
         status: "ok",
