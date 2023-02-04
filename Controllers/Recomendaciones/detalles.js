@@ -5,10 +5,7 @@ const { generateError } = require("../../helpers");
 async function verDetalle(req, res, next) {
     let connection;
     try {
-    connection = await getConnection();
-    connection = await votoSchema();
-    connection = await generateError();
-    
+      connection = await getConnection();
     const { id } = req.params;
 
     
@@ -50,7 +47,7 @@ async function verDetalle(req, res, next) {
             [id]
     )
   
-    const [ detalle ] =  { datosRecomendacion, fotosRecomendacion, datosComentarios, datosVotos }
+    const detalle  =  { datosRecomendacion, fotosRecomendacion, datosComentarios, datosVotos }
   
     res.send({
         status: "ok",

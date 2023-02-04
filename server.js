@@ -1,4 +1,4 @@
-
+const cors = require("cors");
 const path = require("path");
 // Módulo que carga las variables del archivo .env en las variables de entorno
 require("dotenv").config({ path: path.join(__dirname, "./.env") });
@@ -25,6 +25,7 @@ app.use(bodyParser.json());
 // Procesado de body tipo form-data
 app.use(fileUpload());
 
+app.use(cors({origin: 'http://localhost:3000'}))
 
 app.get('/', (req, res) => {
     res.send('Prueba de que funciona el Postman')
