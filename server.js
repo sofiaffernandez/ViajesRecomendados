@@ -60,7 +60,8 @@ const helpers = require("./helpers");
 
     //detalles recomendaciones
     const verDetalle = require("./Controllers/Recomendaciones/detalles")
-
+    //listar todas las recomendaciones
+    const listarTodasRecomendaciones = require("./Controllers/Recomendaciones/listarRecomendaciones");
 
     //Usuarios
     //Editar usuario (cambiar foto de perfil)
@@ -70,7 +71,10 @@ const helpers = require("./helpers");
     //Crear un nuevo usuario
     const nuevoUsuario = require("./Controllers/Usuarios/nuevoUsuario")
     //Cambiar la contraseña de un usuario ya registrado
-    const cambioContraseña = require ("./Controllers/Usuarios/cambioContraseña")
+    const cambioContraseña = require ("./Controllers/Usuarios/cambioContraseña");
+    const  getMeController = require("./Controllers/Usuarios/usuario");
+    const listarRecomendacionesUsuario = require("./Controllers/Usuarios/listarRecomendacionesUsuario.js");
+
 
     // ENDPOINTS DE CONTENIDO 
 
@@ -79,6 +83,11 @@ const helpers = require("./helpers");
 app.get("/recomendacion/buscar", listEntries)
 // Poder ordenar los resultados de búsqueda por votos
 app.get("/recomendacion/ordenar", voteAverage)
+
+//Ver recomendaciones en lista 
+app.get("/recomendaciones", listarTodasRecomendaciones)
+//Ver todas las recomendaciones de un usuario 
+app.get("/usuario/:id/recomendaciones", listarRecomendacionesUsuario)
 // Ver detalle de una recomendación
 app.get("/recomendacion/:id/detalle", verDetalle) 
 // Login (con email y password)
@@ -88,8 +97,9 @@ app.post("/usuario/login", loginUsuario);
 app.post("/usuario/crear", nuevoUsuario);
 
 //USUARIOS REGISTRADOS (hay que verificar el usuario antes):
+
 // Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
-app.post("/recomendacion", esUsuario, nuevaRecomendacion);
+app.post("/recomendacion/crear", esUsuario, nuevaRecomendacion);
 
 // Votar recomendaciones de otros usuarios
 app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecomendacion);
