@@ -27,6 +27,7 @@ async function loginUsuario(req, res, next) {
         401
       );
     }
+    const id = dbUser[0].id
     // Generar token con información del usuario
     const tokenInfo = {
       id: dbUser[0].id
@@ -41,6 +42,7 @@ async function loginUsuario(req, res, next) {
       status: "ok",
       data: {
         token,
+        id
       },
     });
   } catch (error) {

@@ -72,8 +72,9 @@ const helpers = require("./helpers");
     const nuevoUsuario = require("./Controllers/Usuarios/nuevoUsuario")
     //Cambiar la contraseña de un usuario ya registrado
     const cambioContraseña = require ("./Controllers/Usuarios/cambioContraseña");
-    const  getMeController = require("./Controllers/Usuarios/usuario");
     const listarRecomendacionesUsuario = require("./Controllers/Usuarios/listarRecomendacionesUsuario.js");
+const verDetalleUsuario = require("./Controllers/Usuarios/verDetalleUsuario");
+
 
 
     // ENDPOINTS DE CONTENIDO 
@@ -90,6 +91,9 @@ app.get("/recomendaciones", listarTodasRecomendaciones)
 app.get("/usuario/:id/recomendaciones", listarRecomendacionesUsuario)
 // Ver detalle de una recomendación
 app.get("/recomendacion/:id/detalle", verDetalle) 
+//Ver datos de un usuario
+app.get("/usuario/:id/detalle", verDetalleUsuario )
+
 // Login (con email y password)
 app.post("/usuario/login", loginUsuario);
 
@@ -99,10 +103,14 @@ app.post("/usuario/crear", nuevoUsuario);
 //USUARIOS REGISTRADOS (hay que verificar el usuario antes):
 
 // Publicar recomendaciones (título, categoría, lugar, entradilla, texto, foto)
+app.get("/recomendacion/formulario", esUsuario, nuevaRecomendacion)
 app.post("/recomendacion/crear", esUsuario, nuevaRecomendacion);
 
 // Votar recomendaciones de otros usuarios
 app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecomendacion);
+
+//Ver tu propio perfil 
+
 
 
 // Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
@@ -117,7 +125,7 @@ app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomenda
 app.delete("/recomendacion/:id/fotos", esUsuario, recomendacionExiste, borrarFotoRecomendacion);
 
 // Publicar comentarios en las recomendaciones
-app.post("/recomendacion/:id/commentar", esUsuario, recomendacionExiste, comentarRecomendacion);
+app.post("/recomendacion/:id/comentar", esUsuario, recomendacionExiste, comentarRecomendacion);
 
 
 //Middleware 

@@ -24,6 +24,15 @@ async function verDetalle(req, res, next) {
             WHERE id=?`,
             [id]
     )
+    //Selecionar datos usuario creador
+    const datosUsuario = await connection.query (
+      `SELECT usuarios.*
+        FROM usuarios
+        INNER JOIN recomendaciones
+        ON usuarios.id= recomendaciones.autor_id
+        WHERE recomendaciones.id=?`,
+        [id]
+)
       // seleccionar fotos recomendacion
         const fotosRecomendacion = await connection.query (
             `SELECT *
@@ -46,7 +55,7 @@ async function verDetalle(req, res, next) {
             [id]
     )
   
-    const detalle  =  { datosRecomendacion, fotosRecomendacion, datosComentarios, datosVotos }
+    const detalle  = { datosRecomendacion, datosUsuario,  fotosRecomendacion, datosComentarios, datosVotos }
   
     res.send({
         status: "ok",
