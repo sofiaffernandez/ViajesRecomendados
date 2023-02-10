@@ -13,7 +13,7 @@ async function cambioContraseña(req, res, next) {
     await editUserPasswordSchema.validateAsync(req.body);
 
     const { id } = req.params; //Importante: esto va a ser un string
-    const { viejaContraeña, nuevaContraseña } = req.body;
+    const { viejaContrasena, nuevaContrasena } = req.body;
 
     // Comprobar que el usuario que hace la petición es el mismo que quiere cambiar la pass
     if (req.auth.id !== Number(id)) {
@@ -27,7 +27,7 @@ async function cambioContraseña(req, res, next) {
       FROM usuarios
       WHERE id=? AND contraseña=SHA2(?, 512)
     `,
-      [id, viejaContraeña]
+      [id, viejaContrasena]
     );
 
     if (currentUser.length === 0) {
@@ -41,7 +41,7 @@ async function cambioContraseña(req, res, next) {
       SET contraseña=SHA2(?, 512),  ultimo_cambio_contraseña=UTC_TIMESTAMP
       WHERE id=?
     `,
-      [nuevaContraseña, id]
+      [nuevaContrasena, id]
     );
 
     // Dar una respuesta

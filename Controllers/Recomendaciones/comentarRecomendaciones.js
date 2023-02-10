@@ -5,12 +5,12 @@ async function votarRecomendacion(req, res, next) {
   try {
     connection = await getConnection();
     
-    const { id } = req.params;
-    const { comentario } = req.body;
-    
     //Validación de los datos introducidos
       await newComentarioSchema.validateAsync(req.body);
       
+    const { id } = req.params;
+    const { comentario } = req.body;
+    
     // Comprobar que la entrada existe y si no dar un 404
     const [entry] = await connection.query(
       `SELECT id
