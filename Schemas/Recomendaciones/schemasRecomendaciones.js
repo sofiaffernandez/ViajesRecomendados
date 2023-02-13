@@ -70,18 +70,17 @@ const newComentarioSchema = Joi.object().keys({
   
 //Esquema de validación de nuevo voto.
 const votoSchema = Joi.object().keys({
-    voto: Joi.number()
-      .min(1)
-      .max(5)
-      .required()
-      .error(
-        generateError(
-          "El campo voto debe existir y tener un valor entre 1 y 5 (incluídos)",
-          400
-        )
-    ),
+  voto: Joi.number()
+    .min(1)
+    .max(5)
+    .required()
+    .error(
+      generateError(
+        "El campo voto debe tener un valor entre 1 y 5 (incluídos)",
+        400
+      )
+  ),
 });
-  
   
 
 module.exports = {

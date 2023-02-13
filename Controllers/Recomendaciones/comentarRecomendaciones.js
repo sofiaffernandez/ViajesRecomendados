@@ -21,7 +21,7 @@ async function votarRecomendacion(req, res, next) {
 
     // Guardar el comentario en la base de datos
     await connection.query(
-      `INSERT INTO comentario(recomendacion_id, comentario, created_at, usuario_id, lastUpdate)
+      `INSERT INTO comentarios(recomendacion_id, comentario, created_at, usuario_id, lastUpdate)
       VALUES(?, ?, UTC_TIMESTAMP, ?, UTC_TIMESTAMP)`,
       [id, comentario, req.auth.id]
     );
