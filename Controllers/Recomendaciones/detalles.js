@@ -47,6 +47,13 @@ async function verDetalle(req, res, next) {
             WHERE recomendacion_id=?`,
             [id]
     )
+    //votos average
+    const mediaVotos = await connection.query(
+      `SELECT AVG(voto)
+      FROM votos
+      WHERE recomendacion_id=?`,
+      [id]
+    )
       // selecionar comentarios recomendacion 
         const datosComentarios = await connection.query (
           `SELECT *
@@ -55,7 +62,7 @@ async function verDetalle(req, res, next) {
             [id]
     )
   
-    const detalle  = { datosRecomendacion, datosUsuario,  fotosRecomendacion, datosComentarios, datosVotos }
+    const detalle  = { datosRecomendacion, datosUsuario,  fotosRecomendacion, datosComentarios, datosVotos, mediaVotos }
   
     res.send({
         status: "ok",

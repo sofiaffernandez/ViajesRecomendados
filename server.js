@@ -60,6 +60,7 @@ const helpers = require("./helpers");
 
     //detalles recomendaciones
     const verDetalle = require("./Controllers/Recomendaciones/detalles")
+    const verFoto = require("./Controllers/Recomendaciones/verFotosRecomendacion")
     //listar todas las recomendaciones
     const listarTodasRecomendaciones = require("./Controllers/Recomendaciones/listarRecomendaciones");
 
@@ -91,6 +92,8 @@ app.get("/recomendaciones", listarTodasRecomendaciones)
 app.get("/usuario/:id/recomendaciones", listarRecomendacionesUsuario)
 // Ver detalle de una recomendación
 app.get("/recomendacion/:id/detalle", verDetalle) 
+//ver fotos de una recomendacion 
+app.get('/ImagenesProyectoViajes/:imagen', verFoto  );
 //Ver datos de un usuario
 app.get("/usuario/:id/detalle", verDetalleUsuario )
 
@@ -115,6 +118,7 @@ app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecome
 
 // Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
 app.put("/usuario/:id", esUsuario, editarUsuario);
+
 //Gestión del perfil (cambio de contraseña)
 app.post("/usuario/contrasena", esUsuario,  cambioContraseña);
 
@@ -126,6 +130,8 @@ app.delete("/recomendacion/:id/fotos", esUsuario, recomendacionExiste, borrarFot
 
 // Publicar comentarios en las recomendaciones
 app.post("/recomendacion/:id/comentar", esUsuario, recomendacionExiste, comentarRecomendacion);
+
+
 
 
 //Middleware 

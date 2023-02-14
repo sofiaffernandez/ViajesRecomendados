@@ -55,8 +55,7 @@ const newRecomendacionSchema = Joi.object().keys({
     )
 });
 //Esquema validación de nuevo comentario.
-const newComentarioSchema = Joi.object().keys({
-    comentario: Joi.string()
+const newComentarioSchema = Joi.string()
       .min(20)
       .max(1000)
       .required()
@@ -65,12 +64,10 @@ const newComentarioSchema = Joi.object().keys({
           "El campo comentario debe existir y ser mayor de 20 caracteres",
           400
         )
-    ),
-});
+    );
   
 //Esquema de validación de nuevo voto.
-const votoSchema = Joi.object().keys({
-  voto: Joi.number()
+const votoSchema = Joi.number()
     .min(1)
     .max(5)
     .required()
@@ -79,8 +76,8 @@ const votoSchema = Joi.object().keys({
         "El campo voto debe tener un valor entre 1 y 5 (incluídos)",
         400
       )
-  ),
-});
+  );
+
   
 
 module.exports = {
