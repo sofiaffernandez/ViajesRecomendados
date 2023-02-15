@@ -1,15 +1,17 @@
 const { getConnection } = require("../../DB/db");
 const { newComentarioSchema } = require("../../Schemas/Recomendaciones/schemasRecomendaciones");
+const { generateError } = require("../../helpers");
 async function votarRecomendacion(req, res, next) {
   let connection;
   try {
     connection = await getConnection();
     
-    //Validación de los datos introducidos
-      await newComentarioSchema.validateAsync(req.body);
-      
+   await newComentarioSchema.validateAsync(req.body.comentario)
     const { id } = req.params;
     const { comentario } = req.body;
+    // if ( comentario.length < 20 || comentario.length > 1000) {
+    //   throw generateError('El campo comentario debe tener un valor entre 20 y 1000 caracteres (incluídos)', 400);
+    // }
     
     // Comprobar que la entrada existe y si no dar un 404
     const [entry] = await connection.query(

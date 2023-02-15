@@ -52,6 +52,7 @@ async function editUser(req, res, next) {
       }
     } else {
       savedFileName = currentUser[0].image;
+    }
       // Actualizar usuario en la base de datos
       await connection.query(
         `UPDATE usuarios 
@@ -65,7 +66,7 @@ async function editUser(req, res, next) {
         status: "ok",
         message: "Usuario actualizado",
       });
-    }
+    
   } catch (error) {
     next(error);
   } finally {

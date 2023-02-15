@@ -49,7 +49,7 @@ const newUserSchema = Joi.object().keys({
 //Esquema validación cambio contraseña
 
 const editUserPasswordSchema = Joi.object().keys({
-  viejaContraseña: Joi.string()
+  viejaContrasena: Joi.string()
     .min(8)
     .required()
     .alphanum()
@@ -59,7 +59,7 @@ const editUserPasswordSchema = Joi.object().keys({
         400
       )
     ),
-  nuevaContraeña: Joi.string()
+  nuevaContrasena: Joi.string()
     .min(8)
     .required()
     .alphanum()

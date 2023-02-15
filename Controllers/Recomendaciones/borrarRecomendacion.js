@@ -37,7 +37,7 @@ async function borrarRecomendacion(req, res, next) {
 
     // Borra los ficheros
     for (const image of images) {
-      await deleteUpload(image.image);
+      await deleteUpload(image.foto);
     }
 
     // Borrar imágenes de la tabla

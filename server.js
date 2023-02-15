@@ -17,6 +17,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+app.use('/public', express.static('public'));
+
 
 // Procesado de body tipo json
 const bodyParser = require("body-parser");
@@ -75,7 +77,10 @@ const helpers = require("./helpers");
     const cambioContraseña = require ("./Controllers/Usuarios/cambioContraseña");
     const listarRecomendacionesUsuario = require("./Controllers/Usuarios/listarRecomendacionesUsuario.js");
 const verDetalleUsuario = require("./Controllers/Usuarios/verDetalleUsuario");
-
+const listarTodosUsuarios = require("./Controllers/Usuarios/listarTodosUsuarios");
+const deleteUser = require("./Controllers/Usuarios/eliminarUsuario");
+const borrarComentarios = require("./Controllers/Recomendaciones/borrarComentarios");
+const votosMedios = require("./Controllers/Recomendaciones/votosMedios");
 
 
     // ENDPOINTS DE CONTENIDO 
@@ -88,14 +93,18 @@ app.get("/recomendacion/ordenar", voteAverage)
 
 //Ver recomendaciones en lista 
 app.get("/recomendaciones", listarTodasRecomendaciones)
+
+app.get("/usuarios", listarTodosUsuarios)
 //Ver todas las recomendaciones de un usuario 
 app.get("/usuario/:id/recomendaciones", listarRecomendacionesUsuario)
 // Ver detalle de una recomendación
 app.get("/recomendacion/:id/detalle", verDetalle) 
 //ver fotos de una recomendacion 
-app.get('/ImagenesProyectoViajes/:imagen', verFoto  );
+app.get('public/:imagen', verFoto  );
 //Ver datos de un usuario
 app.get("/usuario/:id/detalle", verDetalleUsuario )
+//Obtener votos medios
+app.get("/votos/:id", votosMedios )
 
 // Login (con email y password)
 app.post("/usuario/login", loginUsuario);
@@ -125,8 +134,10 @@ app.post("/usuario/contrasena", esUsuario,  cambioContraseña);
 // Borrar sus recomendaciones
 app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomendacion);
 
-// Borrar las fotos de sus  recomendaciones
-app.delete("/recomendacion/:id/fotos", esUsuario, recomendacionExiste, borrarFotoRecomendacion);
+// Borrar usuario
+app.delete("/usuario/:id", esUsuario, deleteUser );
+// Borrar comentario
+app.delete("/comentario/:id", esUsuario,recomendacionExiste, borrarComentarios );
 
 // Publicar comentarios en las recomendaciones
 app.post("/recomendacion/:id/comentar", esUsuario, recomendacionExiste, comentarRecomendacion);
