@@ -81,6 +81,7 @@ const listarTodosUsuarios = require("./Controllers/Usuarios/listarTodosUsuarios"
 const deleteUser = require("./Controllers/Usuarios/eliminarUsuario");
 const borrarComentarios = require("./Controllers/Recomendaciones/borrarComentarios");
 const votosMedios = require("./Controllers/Recomendaciones/votosMedios");
+const editarRecomendacion = require("./Controllers/Recomendaciones/editarRecomendacion");
 
 
     // ENDPOINTS DE CONTENIDO 
@@ -127,6 +128,8 @@ app.post("/recomendacion/:id/votar", esUsuario, recomendacionExiste, votarRecome
 
 // Gestión del perfil (con posibilidad de añadir a los campos de registro una foto de perfil)
 app.put("/usuario/:id", esUsuario, editarUsuario);
+
+app.put("/recomendacion/:id/editar", editarRecomendacion)
 
 //Gestión del perfil (cambio de contraseña)
 app.post("/usuario/contrasena", esUsuario,  cambioContraseña);
