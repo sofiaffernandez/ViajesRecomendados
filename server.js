@@ -29,9 +29,7 @@ app.use(fileUpload());
 
 app.use(cors({origin: 'http://localhost:3000'}))
 
-app.get('/', (req, res) => {
-    res.send('Prueba de que funciona el Postman')
-  })
+
   
 //Middleware para comprobar si es usuario
 const esUsuario = require("./Middlewares/esUsuario")
@@ -88,7 +86,7 @@ const editarRecomendacion = require("./Controllers/Recomendaciones/editarRecomen
 
 //ANÓNIMO (no hace falta verifcar el usuario):
 // Buscar recomendaciones por lugar, categoría
-app.get("/recomendacion/buscar", listEntries)
+app.get("/", listEntries)
 // Poder ordenar los resultados de búsqueda por votos
 app.get("/recomendacion/ordenar", voteAverage)
 

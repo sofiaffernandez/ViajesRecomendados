@@ -16,7 +16,7 @@ try {
     let orderBy;
     switch (order) {
     case "voto":
-        orderBy = "voto";
+        orderBy = "votos";
         break;
     case "lugar":
         orderBy = "lugar";
@@ -25,7 +25,7 @@ try {
         orderBy = "categoria";
         break;
     default:
-        orderBy = "voto";
+        orderBy = "votos";
         break;
     }
 
@@ -34,25 +34,27 @@ try {
     // Búsqueda por categoría y lugar
     if (categoria && lugar) {
         queryResults = await connection.query(
-        `
-        SELECT * FROM recommendations 
-        WHERE lugar LIKE ? AND categoria LIKE ? 
-        ORDER BY ${orderBy} ${orderDirection}
-        `,
-        [`%${lugar}%`, `%${categoria}%`]
-    );
+          `
+          SELECT * FROM recomendaciones
+          WHERE lugar LIKE ? OR categoria LIKE ? 
+          ORDER BY ${orderBy} ${orderDirection}
+          `,
+          [`%${lugar}%`, `%${categoria}%`]
+        );
     } else {
-      // Ordenar resultados de búsqueda por votos
+        // Ordenar resultados de búsqueda por votos
         queryResults = await connection.query(
-        `
-        SELECT * FROM votos ORDER BY voto DESC;
-        SELECT * FROM recomendaciones JOIN votos ON recomendaciones.id = votos.recomendacion_id ORDER BY votos.votos DESC";
-        ORDER BY ${orderBy} ${orderDirection}`
-    );
+          `
+          SELECT recomendaciones.*, AVG(votos.voto) AS votos FROM recomendaciones
+          LEFT JOIN votos ON recomendaciones.id = votos.recomendacion_id
+          GROUP BY recomendaciones.id
+          ORDER BY votos ${orderDirection}
+          `
+        );
     }
 
     // Extraigo los resultados reales del resultado de la query
-    const [result] = queryResults;
+    const result = queryResults[0];
 
     // Mando la respuesta
     res.send({
