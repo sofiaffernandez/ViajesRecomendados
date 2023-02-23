@@ -39,7 +39,11 @@ async function processAndSaveImage(uploadedImage) {
 }
 
 async function deleteUpload(uploadedImage) {
-  await fs.unlink(path.join(imageUploadPath, uploadedImage));
+  try{
+    await fs.unlink(path.join(imageUploadPath, uploadedImage));
+  }catch (error){
+throw Error (`Error al borrar la imagen ${imagePath}: ${error.message}`)
+  }
 }
 
 function randomString(length = 20) {
