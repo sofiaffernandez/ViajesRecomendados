@@ -13,21 +13,18 @@ async function editarRecomendacion(req, res, next) {
     connection = await getConnection();
     //Validar según el esquema creado los datos introducidos
     await newRecomendacionSchema.validateAsync(req.body);
+
     const { id } = req.params;
+   
     // Sacar de req.body los datos que necesitio
     const { titulo, categoria, lugar, entradilla, texto } = req.body
-
-     // Comprobar que el id de usuario que queremos cambiar es el mismo que firma la petición 
-     if (req.auth.id !== id) {
-        throw generateError("No tienes permisos para editar esta entradilla", 403);
-      }
   
     // Ejecutar la query
     const [result] = await connection.query(
         `UPDATE  recomendaciones 
-        SET titulo=?, categoria=?, lugar=?, entradilla=?, texto=?, autor_id?=?
+        SET titulo=?, categoria=?, lugar=?, entradilla=?, texto=? 
         WHERE id =?`,
-        [titulo, categoria, lugar, entradilla, texto, req.auth.id]
+        [titulo, categoria, lugar, entradilla, texto, id]
       );
 
 
@@ -48,7 +45,7 @@ async function editarRecomendacion(req, res, next) {
 
           await connection.query(
             `UPDATE recomendaciones_fotos
-            SET created_at=UTC_TIMESTAMP, foto =?, recomendacion_id=?
+            SET created_at=UTC_TIMESTAMP, foto=?, recomendacion_id=?
             WHERE recomendacion_id=?`,
             [processedImage,id, id]
           );
