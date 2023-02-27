@@ -69,7 +69,7 @@ const newComentarioSchema = Joi.string()
 //Esquema de validación de nuevo voto.
 const votoSchema = Joi.number()
     .min(1)
-    .max(5)
+    .max(6)
     .required()
     .error(
       generateError(
