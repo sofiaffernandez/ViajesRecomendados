@@ -86,9 +86,7 @@ const editarRecomendacion = require("./Controllers/Recomendaciones/editarRecomen
 
 //ANÓNIMO (no hace falta verifcar el usuario):
 // Buscar recomendaciones por lugar, categoría
-app.get("/", listEntries)
-// Poder ordenar los resultados de búsqueda por votos
-app.get("/recomendacion/ordenar", voteAverage)
+app.get("/recomendaciones/buscar", listEntries)
 
 //Ver recomendaciones en lista 
 app.get("/recomendaciones", listarTodasRecomendaciones)
