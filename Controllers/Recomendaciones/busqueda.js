@@ -26,7 +26,7 @@ console.log(orderDirection)
     if (categoria && lugar) {
       queryResults = await connection.query(
         `
-        SELECT *, AVG(votos.voto) AS votos 
+        SELECT recomendaciones.*, AVG(votos.voto) AS votos 
         FROM recomendaciones 
         LEFT JOIN votos ON recomendaciones.id = votos.recomendacion_id 
         WHERE lugar LIKE ? OR categoria LIKE ? 
@@ -39,7 +39,7 @@ console.log(orderDirection)
     } else if (categoria && !lugar) {
       queryResults = await connection.query(
         `
-        SELECT *, AVG(votos.voto) AS votos 
+        SELECT recomendaciones.*, AVG(votos.voto) AS votos 
         FROM recomendaciones 
         LEFT JOIN votos ON recomendaciones.id = votos.recomendacion_id 
         WHERE categoria LIKE ? 
@@ -52,7 +52,7 @@ console.log(orderDirection)
     } else if (!categoria && lugar) {
       queryResults = await connection.query(
         `
-        SELECT *, AVG(votos.voto) AS votos 
+        SELECT recomendaciones.*, AVG(votos.voto) AS votos 
         FROM recomendaciones 
         LEFT JOIN votos ON recomendaciones.id = votos.recomendacion_id 
         WHERE lugar LIKE ? 
@@ -65,7 +65,7 @@ console.log(orderDirection)
     }else if (!categoria && !lugar) {
         queryResults = await connection.query(
           `
-          SELECT *, AVG(votos.voto) AS votos 
+          SELECT recomendaciones.*, AVG(votos.voto) AS votos 
           FROM recomendaciones 
           LEFT JOIN votos ON recomendaciones.id = votos.recomendacion_id 
           GROUP BY recomendaciones.id 
@@ -76,7 +76,7 @@ console.log(orderDirection)
         }
     // Extraigo los resultados reales del resultado de la query
     const result = queryResults[0];
-console.log(result)
+
     // Mando la respuesta
     res.send({
       status: "ok",
