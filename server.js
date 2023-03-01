@@ -128,7 +128,7 @@ app.put("/usuario/:id", esUsuario, editarUsuario);
 app.put("/recomendacion/:id/editar", editarRecomendacion)
 
 //Gestión del perfil (cambio de contraseña)
-app.post("/usuario/contrasena", esUsuario,  cambioContraseña);
+app.post("/usuario/:id/contrasena", esUsuario,  cambioContraseña);
 
 // Borrar sus recomendaciones
 app.delete("/recomendacion/:id", esUsuario, recomendacionExiste, borrarRecomendacion);
@@ -161,7 +161,7 @@ app.use ((req, res) => {
 });
 
 const port = process.env.PORT;
-console.log(process.env.PORT || 3000)
+
 
 app.listen(port, () => {
   console.log(`API funcionando en http://localhost:${port} `);
